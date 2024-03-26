@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:petaniku2/produk/box_diskripsi.dart';
 import 'package:petaniku2/produk/design_button_fav.dart';
 import 'package:petaniku2/produk/gambar_produk.dart';
 import 'package:petaniku2/produk/scroll_horizontal_produk.dart';
+import 'package:petaniku2/warna/navbar_produk_scroll_hide.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
 
@@ -26,6 +29,27 @@ class produk_dinamis extends StatefulWidget {
 }
 
 class _produk_dinamisState extends State<produk_dinamis> {
+
+ late ScrollController controller;
+
+@override
+void initState(){
+  super.initState();
+
+  controller = ScrollController();
+}
+
+@override
+void dispose(){
+  controller = ScrollController();
+
+  super.dispose();
+}
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -34,6 +58,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
 
     return Scaffold(
      body: SingleChildScrollView(
+      controller: controller,
       child: Center(
           child: Column(
             children: [
@@ -96,6 +121,55 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
           ),
         ), 
      ),
+
+
+    bottomNavigationBar: ScrollToHideWidget(
+      controller: controller,
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: warna.hijau,
+            width: 5,
+            
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(onPressed: () {
+              
+            }, child: Icon(Icons.shopping_cart,size: 35,color: Colors.amber[600],),
+            style: ButtonStyle(
+             minimumSize: MaterialStateProperty.all(Size(180, 35)),
+             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+
+              ),
+             ),
+            ),
+            
+            ),
+           
+     
+            
+           GestureDetector(
+              onTap: () {
+                
+              },
+             child: Container(
+              height: 47,
+              width: 200,
+              alignment: Alignment.center,
+              color: warna.hijau,
+               child: Text("Pesan sekarang",
+               style: stylefont().Subheader_navbar_produk,),
+             ),
+           ),
+          ],
+          ),
+      ), 
+    ),
 
     );
   }

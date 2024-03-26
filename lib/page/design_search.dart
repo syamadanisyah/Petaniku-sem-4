@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petaniku2/search/search.dart';
 import 'package:petaniku2/warna/stylefont.dart';
+import 'package:petaniku2/Kategori/listview_kategori.dart';
 
 class design_search extends StatefulWidget {
   const design_search({super.key});
@@ -33,6 +34,13 @@ class _design_searchingState extends State<design_search> {
                    child: Text("Pencarian Terakhir",
                    style: stylefont().Subheader,),
                 ),
+
+                  Container(
+              height: 200,
+              width: 395,
+              child: listview_kategori(),
+        
+              ),
                 
             ],
           ),

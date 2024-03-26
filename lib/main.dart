@@ -9,10 +9,14 @@ import 'package:petaniku2/design_asset_login/test_asset_login.dart';
 import 'package:petaniku2/page/Lupa_password/design_OTP.dart';
 import 'package:petaniku2/page/design_barang.dart';
 import 'package:petaniku2/page/design_dashboard.dart';
+import 'package:petaniku2/page/design_keranjang1.dart';
+import 'package:petaniku2/page/design_keranjang_transaction.dart';
 import 'package:petaniku2/page/design_list_kategori.dart';
 import 'package:petaniku2/page/design_login.dart';
 import 'package:petaniku2/page/Lupa_password/design_lupa_password.dart';
 import 'package:petaniku2/page/Lupa_password/design_verifikasi_sandi.dart';
+import 'package:petaniku2/page/design_produk.dart';
+import 'package:petaniku2/page/design_unit_kategori.dart';
 import 'package:petaniku2/page/navbar.dart';
 import 'package:petaniku2/produk/test_asset_produk.dart';
 import 'package:petaniku2/search/search.dart';
@@ -32,7 +36,7 @@ class MyApp extends StatelessWidget {
       // home: test_asset_login(),
 initialRoute: '/',
 routes: {
-  '/':(context) => design_lupa_password()
+  '/':(context) => keranjang_transactionState()
 },
 
 

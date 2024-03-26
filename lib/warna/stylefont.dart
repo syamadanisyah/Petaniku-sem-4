@@ -50,4 +50,12 @@ final TextStyle Subheader = TextStyle(
 );
 
 
+final TextStyle Subheader_navbar_produk = TextStyle(
+  fontSize: 20,
+  fontFamily: GoogleFonts.urbanist().fontFamily,
+  fontWeight: FontWeight.bold,
+  color: Colors.white
+);
+
+
 }
