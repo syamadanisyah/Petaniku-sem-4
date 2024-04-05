@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060374522756",
+    "project_id": "petaniku-f608f",
+    "storage_bucket": "petaniku-f608f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060374522756:android:8135824af5820258200bd1",
+        "android_client_info": {
+          "package_name": "com.example.petaniku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChSDK3kFXNgHOcusQZKzsYCwu2KvrX7UU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060374522756:android:579abb98112e61f4200bd1",
+        "android_client_info": {
+          "package_name": "com.example.petaniku2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChSDK3kFXNgHOcusQZKzsYCwu2KvrX7UU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

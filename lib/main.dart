@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petaniku2/Barang/test_asset_barang.dart';
 import 'package:petaniku2/Dashboard/test_asset_dashboard.dart';
@@ -6,6 +7,7 @@ import 'package:petaniku2/Lupa_Sandi/OTP.dart';
 import 'package:petaniku2/Lupa_Sandi/test_assest_lp.dart';
 import 'package:petaniku2/SplashScreen/SplashScreen.dart';
 import 'package:petaniku2/design_asset_login/test_asset_login.dart';
+import 'package:petaniku2/page/CRUD/CRUD.dart';
 import 'package:petaniku2/page/Lupa_password/design_OTP.dart';
 import 'package:petaniku2/page/design_barang.dart';
 import 'package:petaniku2/page/design_dashboard.dart';
@@ -16,12 +18,18 @@ import 'package:petaniku2/page/design_login.dart';
 import 'package:petaniku2/page/Lupa_password/design_lupa_password.dart';
 import 'package:petaniku2/page/Lupa_password/design_verifikasi_sandi.dart';
 import 'package:petaniku2/page/design_produk.dart';
+import 'package:petaniku2/page/design_profile_view.dart';
 import 'package:petaniku2/page/design_unit_kategori.dart';
 import 'package:petaniku2/page/navbar.dart';
 import 'package:petaniku2/produk/test_asset_produk.dart';
 import 'package:petaniku2/search/search.dart';
+import 'package:petaniku2/firebase_options.dart';
 
-void main() {
+void main() async{
+WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -36,7 +44,7 @@ class MyApp extends StatelessWidget {
       // home: test_asset_login(),
 initialRoute: '/',
 routes: {
-  '/':(context) => keranjang_transactionState()
+  '/':(context) => design_profile_view()
 },
 
 
