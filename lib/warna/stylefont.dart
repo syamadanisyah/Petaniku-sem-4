@@ -16,7 +16,9 @@ final TextStyle body_gridview = TextStyle(
   fontFamily: GoogleFonts.urbanist().fontFamily,
   fontWeight: FontWeight.w700,
   color: Colors.black,
-  fontSize: 17
+
+  //wes kenek kan tapi? he eh kenek bang :) anjay tak benakno seyk font e 
+  fontSize: 15
   
 );
 
@@ -24,7 +26,8 @@ final TextStyle body_gridview = TextStyle(
 final TextStyle diskripsi_gridview_barang = TextStyle(
  fontFamily: GoogleFonts.urbanist().fontFamily,
   fontWeight: FontWeight.w700,
-color: warna.warna_Lupa_password
+color: warna.warna_Lupa_password,
+fontSize: 15
 
 );
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:petaniku2/produk/box_diskripsi.dart';
 import 'package:petaniku2/produk/design_button_fav.dart';
@@ -11,24 +12,36 @@ import 'package:petaniku2/warna/warna.dart';
 
 
 class design_produk extends StatelessWidget {
-  const design_produk({super.key});
+  final Map<String,dynamic> dataProduk;
+  
+  const design_produk({Key? key,
+  required this.dataProduk
+  }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return produk_dinamis();
+
+    return produk_dinamis(dataProduk: dataProduk,);
   }
 }
 
 class produk_dinamis extends StatefulWidget {
+
+final Map<String,dynamic>dataProduk;
+
   const produk_dinamis({
-    super.key,
-  });
+    Key? key ,
+    required this.dataProduk
+  }):super(key: key);
 
   @override
   State<produk_dinamis> createState() => _produk_dinamisState();
 }
 
 class _produk_dinamisState extends State<produk_dinamis> {
+
+
+
 
  late ScrollController controller;
 
@@ -78,11 +91,13 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                         SizedBox(height: 7,),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text("Nama produk",style: stylefont().body,)
+                          child: Text(widget.dataProduk['nama_produk']
+                          ,style: stylefont().body,)
                           ),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text("Rp150.000",style: stylefont().body,),
+                          child: Text(widget.dataProduk['harga'],
+                          style: stylefont().body,),
                         ),
                       ],
                     ),
@@ -97,7 +112,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
         
               Container(
                 height: 200,
-                child: box_diskripsi(),
+                child: Text(widget.dataProduk['diskripsi']),
                 ),
                
 

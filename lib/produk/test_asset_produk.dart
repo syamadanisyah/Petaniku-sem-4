@@ -73,7 +73,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
         
               Container(
                 height: 200,
-                child: box_diskripsi(),
+                //child: box_diskripsi(deskripsi: ,),
                 ),
                
 

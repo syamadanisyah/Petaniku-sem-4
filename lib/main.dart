@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       // home: test_asset_login(),
 initialRoute: '/',
 routes: {
-  '/':(context) => design_profile_view()
+  '/':(context) => design_barang()
 },
 
 

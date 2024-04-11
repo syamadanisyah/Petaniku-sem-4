@@ -41,7 +41,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                   child: slider_barang()
                   ),
                   
-                  SizedBox(height: 70,),
+                  SizedBox(height: 50,),
               Container(
                 margin: EdgeInsets.only(left: 15),
                 alignment: Alignment.centerLeft,
@@ -65,6 +65,19 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
 
                 ),
                 SizedBox(height: 30,),
+               Container(
+                 height: mediaqueryheigh*0.5,
+                 width: mediaquerywidth*1,
+                 decoration: BoxDecoration(
+                  borderRadius:BorderRadius.circular(10),
+                   color: warna.hijau
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: scroll_horizontal_barang(),
+                  ) ,
+                ),
+                SizedBox(height: 10,),
                Container(
                  height: mediaqueryheigh*0.5,
                  width: mediaquerywidth*1,

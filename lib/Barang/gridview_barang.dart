@@ -1,11 +1,46 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
+import 'package:http/http.dart' as http;
 
-class gridview_barang extends StatelessWidget {
+class gridview_barang extends StatefulWidget {
   
+  @override
+  State<gridview_barang> createState() => _gridview_barangState();
+}
+
+class _gridview_barangState extends State<gridview_barang> {
+List _produk=[];
+
+Future _ambilData() async {
+  try {
+    final response = await http.get(Uri.parse('http://localhost/flutterapi/petaniku/read.php')
+    );
+
+   if(response.statusCode==200){
+    print(response.body);
+    final data = jsonDecode(response.body);
+    setState(() {
+      _produk=data;
+    });
+   }
+
+  } catch (e) {
+    print(e);
+  }
+}
+
+@override
+  void initState() {
+    _ambilData();
+    
+    // TODO: implement initState
+    super.initState();
+  }
+
 
 @override
 Widget build(BuildContext context) {
@@ -72,8 +107,6 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-
 }
 
 
