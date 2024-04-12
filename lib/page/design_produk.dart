@@ -76,9 +76,9 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
           child: Column(
             children: [
               SizedBox(height: 100,),
-               Container(
+             /*  Container(
                 child: gambar_produk()
-               ),
+               ),*/
                SizedBox(height: 10,),
               Container(
                 color: warna.hijau,
@@ -111,8 +111,15 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
               ),
         
               Container(
-                height: 200,
-                child: Text(widget.dataProduk['diskripsi']),
+                margin: EdgeInsets.only(bottom: 30),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(widget.dataProduk['diskripsi'],
+                  textAlign:TextAlign.justify,
+                  maxLines: null,
+                  overflow: TextOverflow.visible,
+                  style: stylefont().Subheader,),
+                ),
                 ),
                
 

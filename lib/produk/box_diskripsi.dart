@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class box_diskripsi extends StatelessWidget {
 
-  final String deskripsi;
+  final Map<String,dynamic> deskripsi;
   const box_diskripsi({
     Key? key,
   required this.deskripsi
@@ -13,17 +13,17 @@ class box_diskripsi extends StatelessWidget {
 
 
 
-    return box_diskripsi_dinamis(deskripsi: deskripsi,);
+    return box_diskripsi_dinamis(deskripsi2: deskripsi,);
   }
 }
 
 class box_diskripsi_dinamis extends StatefulWidget {
 
-final String deskripsi;
+final Map<String,dynamic> deskripsi2;
 
   const box_diskripsi_dinamis({
     Key?Key,
-    required this.deskripsi
+    required this.deskripsi2
   }):super(key: Key);
 
   @override
@@ -50,8 +50,7 @@ class _box_diskripsi_dinamisState extends State<box_diskripsi_dinamis> {
           SizedBox(height: 8),
           Visibility(
             visible: !isExpanded,
-            child: Text(
-              widget.deskripsi,
+            child: Text(widget.deskripsi2['deskripsi'],
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17),
@@ -59,8 +58,7 @@ class _box_diskripsi_dinamisState extends State<box_diskripsi_dinamis> {
           ),
           Visibility(
             visible: isExpanded,
-            child: Text(
-              widget.deskripsi,
+            child: Text(widget.deskripsi2['deskripsi'],
               style: TextStyle(fontSize: 17),
             ),
           ),
