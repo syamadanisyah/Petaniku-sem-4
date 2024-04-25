@@ -1,47 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/semantics.dart';
-import 'package:flutter/widgets.dart';
-import 'package:petaniku2/produk/box_diskripsi.dart';
-import 'package:petaniku2/produk/design_button_fav.dart';
-import 'package:petaniku2/produk/gambar_produk.dart';
+import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/produk/scroll_horizontal_produk.dart';
 import 'package:petaniku2/warna/navbar_produk_scroll_hide.dart';
-import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
+import 'package:petaniku2/warna/stylefont.dart';
 
-
-class design_produk extends StatelessWidget {
-  final Map<String,dynamic> dataProduk;
+class design_produk_detail_kategori extends StatelessWidget {
+  final Map<String,dynamic> dataProdukByKategori;
   
-  const design_produk({Key? key,
-  required this.dataProduk
+  const design_produk_detail_kategori({Key? key,
+  required this.dataProdukByKategori
   }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    return produk_dinamis(dataProduk: dataProduk,);
+    return produk_detail_kategori_dinamis(dataProdukByKategori_dinamis: dataProdukByKategori,);
   }
 }
 
-class produk_dinamis extends StatefulWidget {
+class produk_detail_kategori_dinamis extends StatefulWidget {
+final Map<String,dynamic> dataProdukByKategori_dinamis;
 
-final Map<String,dynamic>dataProduk;
+const produk_detail_kategori_dinamis({
+  Key?key,
+  required this.dataProdukByKategori_dinamis
+}):super(key: key);
 
-  const produk_dinamis({
-    Key? key ,
-    required this.dataProduk
-  }):super(key: key);
+// final Map<String,dynamic>dataProduk;
+
+//   const produk_detail_kategori_dinamis({
+//     Key? key ,
+//     required this.dataProduk
+//   }):super(key: key);
 
   @override
-  State<produk_dinamis> createState() => _produk_dinamisState();
+  State<produk_detail_kategori_dinamis> createState() => _produk_dinamisState(ambilData: dataProdukByKategori_dinamis);
 }
 
-class _produk_dinamisState extends State<produk_dinamis> {
-
-
-
+class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
+final Map<String,dynamic> ambilData ;
+_produk_dinamisState({
+  required this.ambilData
+});
 
  late ScrollController controller;
 
@@ -91,21 +92,17 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                         SizedBox(height: 7,),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text(widget.dataProduk['nama_produk']
-                          ,style: stylefont().body,)
+                          child: Text(ambilData['nama'],
+                          style: stylefont().body,)
                           ),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text(widget.dataProduk['harga'],
+                          child: Text(ambilData['harga'],
                           style: stylefont().body,),
                         ),
                       ],
                     ),
                     SizedBox(width: 170,),
-                   /* Container(
-
-                      child: button_wishlist(),
-                    ),*/
                   ],
                 ),
               ),
@@ -114,7 +111,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                 margin: EdgeInsets.only(bottom: 30),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(widget.dataProduk['diskripsi'],
+                  child: Text(ambilData['deskripsi'],
                   textAlign:TextAlign.justify,
                   maxLines: null,
                   overflow: TextOverflow.visible,
@@ -122,11 +119,11 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                 ),
                 ),
                
-
-
+    
+    
               Container(
                //untuk memanggil scroll horizontal harus memberi nilai ukuran pada container jika tidak akan mengalami error rendering box
-
+    
                  height: mediaqueryheigh*0.5,
                  width: mediaquerywidth*1,
                  decoration: BoxDecoration(
@@ -143,8 +140,8 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
           ),
         ), 
      ),
-
-
+    
+    
     bottomNavigationBar: ScrollToHideWidget(
       controller: controller,
       child: Container(
@@ -166,7 +163,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
              minimumSize: MaterialStateProperty.all(Size(180, 35)),
              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-
+    
               ),
              ),
             ),
@@ -192,7 +189,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
           ),
       ), 
     ),
-
+    
     );
   }
 }

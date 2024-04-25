@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petaniku2/page/design_barang.dart';
 import 'package:petaniku2/warna/warna.dart';
 
 class button_barang_dashboard extends StatelessWidget {
@@ -10,7 +11,8 @@ class button_barang_dashboard extends StatelessWidget {
     return  ElevatedButton( 
         
         onPressed: () {
-        
+        Navigator.push(context,
+         MaterialPageRoute(builder: (context) => design_barang(),));
       },
       style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

@@ -35,12 +35,12 @@ class _design_searchingState extends State<design_search> {
                    style: stylefont().Subheader,),
                 ),
 
-                  Container(
+                /*  Container(
               height: 200,
               width: 395,
               child: listview_kategori(),
         
-              ),
+              ),*/
                 
             ],
           ),

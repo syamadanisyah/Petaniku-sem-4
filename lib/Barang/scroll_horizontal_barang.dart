@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/page/design_produk.dart';
+import 'package:petaniku2/produk/modelProduk.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:http/http.dart' as http;
@@ -33,18 +35,21 @@ class dinamis_horizontal extends StatefulWidget {
 class _dinamis_horizontalState extends State<dinamis_horizontal> {
   String jsonProduk = "{}";
 
-  List<Map<String, dynamic>> listProduk = [];
+  List<produk> listProduk = [];
 
   Future<void> showProduk() async {
     final response = await http
-        .get(Uri.parse('http://192.168.18.11/flutterapi/petaniku/read.php'));
+        .get(Uri.parse('http://192.168.241.71/flutterapi/petaniku/read.php'));
     if (response.statusCode == 200) {
-      jsonProduk = response.body.toString();
-      setState(() {
-        listProduk = List<Map<String, dynamic>>.from(json.decode(jsonProduk));
-        //ojo di kulinakne manual nek iso otomatis bang wkwkw siap :v
-      });
-      print("Contoh data = " + listProduk[0]['nama_produk']);
+        List<dynamic> jsonData = json.decode(response.body);
+           
+           setState(() {
+             listProduk = jsonData.map((data) =>
+              produk.fromJson(data)).toList();
+           });
+     // print("Contoh data = " + listProduk[0]['nama_produk']);
+    }else{
+      throw Exception('failed to load data');
     }
   }
 
@@ -75,13 +80,14 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
       itemCount: listProduk.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
+        final produk prd = listProduk[index]; 
         return GestureDetector(
-          onTap: () {
+          /*onTap: () {
             Navigator.push(context, 
             MaterialPageRoute(builder: (context) => 
             design_produk(dataProduk:listProduk[index],)
             ));
-          },
+          },*/
           child: Container(
             //layout untuk penampilan
             decoration: BoxDecoration(
@@ -111,10 +117,10 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: listProduk[index]['nama_produk'].isEmpty
+                   child: prd.nama_produk.isEmpty
                         ? Text("Loading..")
                         : Text(
-                            listProduk[index]['nama_produk'],
+                            prd.nama_produk,
                             style: stylefont().body_gridview,
                           ),
                   ),//font mu kegeden oke wait
@@ -123,11 +129,11 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: listProduk.isEmpty ? Text(
+                    child: prd.harga.isEmpty ? Text(
                       "Loading...",
                       style: stylefont().body_gridview,
                     ): Text(
-                      listProduk[index]['harga'],
+                      prd.harga,
                       style: stylefont().body_gridview,
                     ),
                   ),
@@ -137,13 +143,13 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   //dah brrti data mu kosong dan gaenek seng di load
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: listProduk.isEmpty? Text("Loading...",
+                   child: prd.deskripsi.isEmpty? Text("Loading...",
                       style: stylefont().diskripsi_gridview_barang,
                       //btw dm kuning wes iso di tuker:v anjay aku ngincer skin bened :v
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ):Text(
-                      listProduk[index]['diskripsi'],
+                     prd.deskripsi,
                       style: stylefont().diskripsi_gridview_barang,
                        maxLines: 2,
                       overflow: TextOverflow.ellipsis,

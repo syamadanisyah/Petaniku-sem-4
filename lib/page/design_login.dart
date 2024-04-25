@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petaniku2/design_asset_login/button_login.dart';
@@ -5,9 +7,46 @@ import 'package:petaniku2/design_asset_login/textButton_lupa_psw.dart';
 import 'package:petaniku2/design_asset_login/textButton_regis.dart';
 import 'package:petaniku2/design_asset_login/textfield_login.dart';
 import 'package:petaniku2/design_asset_login/textfield_login_password.dart';
+import 'package:petaniku2/page/design_dashboard.dart';
 import 'package:petaniku2/warna/warna.dart';
+import 'package:http/http.dart' as http;
 
-class design_login extends StatelessWidget {
+class design_login extends StatefulWidget {
+  @override
+  State<design_login> createState() => _design_loginState();
+}
+
+class _design_loginState extends State<design_login> {
+
+final TextEditingController _usernameController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+
+
+Future<void> _login() async{
+  final String username = _usernameController.text.trim();
+  final String password = _passwordController.text.trim();
+
+
+  final response = await http.post(
+  Uri.parse('http://192.168.69.71:8000/api/login'),
+  body: {'username':username,'password':password}
+
+  );
+
+
+  if(response.statusCode==200){
+    //login berhasil
+    final responeData = jsonDecode(response.body);
+    Navigator.push(context, MaterialPageRoute(builder:(context) => design_dashboard(), ));
+  }else{
+    //login gagal 
+    final errorMessage = jsonDecode(response.body)['message'];
+    print(errorMessage);
+  }
+} 
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,7 +89,9 @@ class design_login extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600, fontSize: 17)),
                 ),*/
-                textfield_login_email(),
+                textfield_login_email(
+                  Controller: _usernameController,
+                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -60,13 +101,17 @@ class design_login extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600, fontSize: 17)),
                 ),*/
-                textfield_login_password(),
+                textfield_login_password(
+                  PController: _passwordController,
+                ),
                 Container(
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.only(right: 10),
                     child: textbutton_login_LP()),
                 Container(
-                    alignment: Alignment.center, child: button_login_email()),
+                    alignment: Alignment.center, child: button_login_email(
+                      onPressed: _login,
+                    )),
                 SizedBox(
                   height: 35,
                 ),

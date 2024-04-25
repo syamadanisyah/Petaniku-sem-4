@@ -18,9 +18,9 @@ class test_asset_login extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 106,),
-            textfield_login_email(),
+            //textfield_login_email(),
             SizedBox(height: 30,),
-            textfield_login_password(),
+          //  textfield_login_password(),
             Container(
               margin: EdgeInsets.only(right: 10),
               alignment: Alignment.centerRight,

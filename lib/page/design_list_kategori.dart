@@ -30,7 +30,7 @@ class _design_list_kategoriState extends State<design_list_kategori> {
               //color: Colors.amber,
               width: 390,
               height: 60,
-             child: search_kategori(),
+         //    child: search_kategori(),
             ),
             Container(
               height: 200,
