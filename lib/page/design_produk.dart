@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:petaniku2/produk/box_diskripsi.dart';
 import 'package:petaniku2/produk/design_button_fav.dart';
 import 'package:petaniku2/produk/gambar_produk.dart';
+import 'package:petaniku2/produk/modelProduk.dart';
 import 'package:petaniku2/produk/scroll_horizontal_produk.dart';
 import 'package:petaniku2/warna/navbar_produk_scroll_hide.dart';
 import 'package:petaniku2/warna/stylefont.dart';
@@ -12,7 +13,7 @@ import 'package:petaniku2/warna/warna.dart';
 
 
 class design_produk extends StatelessWidget {
-  final Map<String,dynamic> dataProduk;
+  final produk dataProduk;
   
   const design_produk({Key? key,
   required this.dataProduk
@@ -27,7 +28,7 @@ class design_produk extends StatelessWidget {
 
 class produk_dinamis extends StatefulWidget {
 
-final Map<String,dynamic>dataProduk;
+final produk dataProduk;
 
   const produk_dinamis({
     Key? key ,
@@ -35,11 +36,16 @@ final Map<String,dynamic>dataProduk;
   }):super(key: key);
 
   @override
-  State<produk_dinamis> createState() => _produk_dinamisState();
+  State<produk_dinamis> createState() => _produk_dinamisState(dataProduk: dataProduk);
 }
 
 class _produk_dinamisState extends State<produk_dinamis> {
 
+final produk dataProduk;
+
+_produk_dinamisState({
+  required this.dataProduk
+});
 
 
 
@@ -91,12 +97,12 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                         SizedBox(height: 7,),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text(widget.dataProduk['nama_produk']
+                          child: Text(''
                           ,style: stylefont().body,)
                           ),
                         Container(
                           margin: EdgeInsets.only(left: 10),
-                          child: Text(widget.dataProduk['harga'],
+                          child: Text('Rp ${dataProduk.harga}',
                           style: stylefont().body,),
                         ),
                       ],
@@ -114,7 +120,7 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                 margin: EdgeInsets.only(bottom: 30),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(widget.dataProduk['diskripsi'],
+                  child: Text('',
                   textAlign:TextAlign.justify,
                   maxLines: null,
                   overflow: TextOverflow.visible,

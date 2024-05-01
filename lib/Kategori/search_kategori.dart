@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 class search_kategori extends StatefulWidget {
+  
+  
   const search_kategori({super.key,
   required this.controller,
   required this.onSubmitted,
@@ -26,12 +28,13 @@ class _search_kategoriState extends State<search_kategori> {
           width: 340,
           child: TextField(
             controller: widget.controller,
+            onSubmitted: (value) {
+              //
+            },
             decoration:InputDecoration(
-              
               contentPadding: EdgeInsets.all(10),
               fillColor: warna.warna_searching,
               filled: true,
-              
               suffixIcon: Icon(Icons.search,),
               hintText: 'Pencarian',
               hintStyle: stylefont().diskripsi_gridview_barang,
@@ -42,10 +45,8 @@ class _search_kategoriState extends State<search_kategori> {
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide.none
               ),
-
-              
             ),
-            onSubmitted: widget.onSubmitted,
+            // onSubmitted: widget.onSubmitted,
             textInputAction: TextInputAction.search,
           ),
         ),

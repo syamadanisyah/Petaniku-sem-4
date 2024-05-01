@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/page/design_produk.dart';
 import 'package:petaniku2/produk/modelProduk.dart';
+import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:http/http.dart' as http;
@@ -38,8 +39,11 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
   List<produk> listProduk = [];
 
   Future<void> showProduk() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.241.71/flutterapi/petaniku/read.php'));
+     
+     try {
+       
+       final response = await http
+        .get(PetaniKuConstant.baseUrl('produk'));
     if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
            
@@ -51,6 +55,15 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
     }else{
       throw Exception('failed to load data');
     }
+
+
+
+     } catch (error) {
+       print('Error:$error');
+     }
+
+
+ 
   }
 
 @override
@@ -82,12 +95,13 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
       itemBuilder: (context, index) {
         final produk prd = listProduk[index]; 
         return GestureDetector(
-          /*onTap: () {
+         onTap: () {
             Navigator.push(context, 
             MaterialPageRoute(builder: (context) => 
-            design_produk(dataProduk:listProduk[index],)
+            design_produk(dataProduk:prd,)
             ));
-          },*/
+          },
+          
           child: Container(
             //layout untuk penampilan
             decoration: BoxDecoration(
@@ -117,23 +131,24 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                   child: prd.nama_produk.isEmpty
-                        ? Text("Loading..")
-                        : Text(
-                            prd.nama_produk,
-                            style: stylefont().body_gridview,
-                          ),
+                  //  child: prd.nama_produk.isEmpty
+                  //       ? Text("Loading..")
+                  //       : Text(
+                  //           // prd.nama_produk,
+                  //           ''
+                  //           style: stylefont().body_gridview,
+                  //         ),
                   ),//font mu kegeden oke wait
                   SizedBox(// seyk dilut
                     height: 10,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: prd.harga.isEmpty ? Text(
+                    child: prd.harga ==0? Text(
                       "Loading...",
                       style: stylefont().body_gridview,
                     ): Text(
-                      prd.harga,
+                      'Rp ${prd.harga}',
                       style: stylefont().body_gridview,
                     ),
                   ),
@@ -143,17 +158,19 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   //dah brrti data mu kosong dan gaenek seng di load
                   Container(
                     alignment: Alignment.centerLeft,
-                   child: prd.deskripsi.isEmpty? Text("Loading...",
+                   child:  Text("Loading...",
                       style: stylefont().diskripsi_gridview_barang,
                       //btw dm kuning wes iso di tuker:v anjay aku ngincer skin bened :v
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                    ):Text(
-                     prd.deskripsi,
-                      style: stylefont().diskripsi_gridview_barang,
-                       maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    )
+                    // :Text(
+                    // //  prd.deskripsi,
+                    // 'dees',
+                    //   style: stylefont().diskripsi_gridview_barang,
+                    //    maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                   ),
                 ],
               ),

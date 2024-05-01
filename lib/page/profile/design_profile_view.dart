@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petaniku2/page/profile/profile_edit.dart';
 import 'package:petaniku2/warna/warna.dart';
 
 class design_profile_view extends StatefulWidget {
@@ -13,9 +14,52 @@ class _design_profile_viewState extends State<design_profile_view> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          child: Text("Informasi Akun"),
+        title: Row(
+          children: [
+            Container(
+              child: Text("Informasi Akun"),
+            ),
+          ],
         ),
+        actions: [
+          PopupMenuButton(itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                child: Text('setting'),
+                value: 'setting',
+              ),
+              PopupMenuItem(
+                child: Text('about app'),
+                value: 'about',
+              ),
+              PopupMenuItem(
+                child: Text('Logout'),
+                value: 'Logout',
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            switch (value) {
+              case'setting':
+              Navigator.push(context,MaterialPageRoute(builder: (context) => profile_edit(),
+              ),
+              );
+              break;
+              case'about':
+              // Navigator.push(context,MaterialPageRoute(builder: (context) => profile_edit(),
+              // ),
+              // );
+              break;
+              case'Logout':
+              // Navigator.push(context,MaterialPageRoute(builder: (context) => profile_edit(),
+              // ),
+              // );
+              break;
+
+            }
+          },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -43,17 +87,10 @@ class _design_profile_viewState extends State<design_profile_view> {
                      // color: Colors.amber,
                       height: 40,
                       width: 200,
-                      child: TextField(
-                        
-                        decoration: InputDecoration(
-                          hintText: "Username",
-                          hintStyle:  TextStyle(fontSize: 20,color: warna.warna_Lupa_password),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10), 
-                          ),
-                        ),
-                      ),
+                      child: Text(
+  "Username", // Replace with your phone number variable
+  style: TextStyle(fontSize: 20, color: warna.warna_Lupa_password),
+),
                     ),
               ],
              ),
@@ -75,17 +112,10 @@ class _design_profile_viewState extends State<design_profile_view> {
                      // color: Colors.amber,
                       height: 40,
                       width: 200,
-                      child: TextField(
-                        
-                        decoration: InputDecoration(
-                          hintText: "Nama",
-                          hintStyle:  TextStyle(fontSize: 20,color: warna.warna_Lupa_password),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10), 
-                          ),
-                        ),
-                      ),
+                      child: Text(
+  "Nama", // Replace with your phone number variable
+  style: TextStyle(fontSize: 20, color: warna.warna_Lupa_password),
+),
                     ),
               ],
              ),
@@ -110,16 +140,10 @@ class _design_profile_viewState extends State<design_profile_view> {
                      //color: Colors.amber,
                       height: 40,
                       width: 200,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle:  TextStyle(fontSize: 20,color: warna.warna_Lupa_password),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10), 
-                          ),
-                        ),
-                      ),
+                      child: Text(
+  "Email", // Replace with your phone number variable
+  style: TextStyle(fontSize: 20, color: warna.warna_Lupa_password),
+),
                     ),
               ],
              ),
@@ -143,16 +167,12 @@ class _design_profile_viewState extends State<design_profile_view> {
                      // color: Colors.amber,
                       height: 40,
                       width: 200,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "No Telp",
-                          hintStyle:  TextStyle(fontSize: 20,color: warna.warna_Lupa_password),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10), 
-                          ),
-                        ),
-                      ),
+                      child: Text(
+  "Nomer", // Replace with your phone number variable
+  style: TextStyle(
+    fontSize: 20, color: warna.warna_Lupa_password,
+  ),
+),
                     ),
               ],
              ),
@@ -182,18 +202,12 @@ class _design_profile_viewState extends State<design_profile_view> {
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(13)
                       ),
-                      child:TextField(
-                       maxLines: null,
-                       keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          hintText: "Alamat",
-                          hintStyle:  TextStyle(fontSize: 20,color: warna.warna_Lupa_password),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10), 
-                          ),
-                        ),
-                      ),
+                      child:Text(
+  "alamat", // Replace with your actual address variable
+  maxLines: null,
+  overflow: TextOverflow.ellipsis, // Add ellipsis if text overflows
+  style: TextStyle(fontSize: 20, color: warna.warna_Lupa_password),
+),
                     ),
               ],
              ),

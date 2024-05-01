@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:petaniku2/page/Lupa_password/design_profile.dart';
+import 'package:petaniku2/page/profile/design_profile.dart';
 import 'package:petaniku2/page/design_search.dart';
 import 'package:petaniku2/page/design_barang.dart';
+import 'package:petaniku2/page/profile/design_profile_view.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
 
@@ -65,7 +66,7 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
      screens:[
       design_barang(),
       design_search(),
-      design_profile()
+      design_profile_view()
 
      ],
      items: _navBarsItems(), 

@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petaniku2/Barang/test_asset_barang.dart';
 import 'package:petaniku2/Dashboard/test_asset_dashboard.dart';
+import 'package:petaniku2/Kategori/modelKategori.dart';
+import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/Kategori/test_asset_kategori.dart';
 import 'package:petaniku2/Lupa_Sandi/OTP.dart';
 import 'package:petaniku2/Lupa_Sandi/test_assest_lp.dart';
@@ -18,7 +20,7 @@ import 'package:petaniku2/page/design_login.dart';
 import 'package:petaniku2/page/Lupa_password/design_lupa_password.dart';
 import 'package:petaniku2/page/Lupa_password/design_verifikasi_sandi.dart';
 import 'package:petaniku2/page/design_produk.dart';
-import 'package:petaniku2/page/design_profile_view.dart';
+import 'package:petaniku2/page/profile/design_profile_view.dart';
 import 'package:petaniku2/page/design_unit_kategori.dart';
 import 'package:petaniku2/page/navbar.dart';
 import 'package:petaniku2/produk/test_asset_produk.dart';
@@ -44,7 +46,8 @@ class MyApp extends StatelessWidget {
       // home: test_asset_login(),
 initialRoute: '/',
 routes: {
-  '/':(context) => design_login()
+  // '/':(context) => design_unit_kategori(kategori: modelKategori(id: 1, namaKategori: ''))
+    '/':(context) => design_dashboard()
 },
 
 

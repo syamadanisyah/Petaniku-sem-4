@@ -8,6 +8,7 @@ import 'package:petaniku2/design_asset_login/textButton_regis.dart';
 import 'package:petaniku2/design_asset_login/textfield_login.dart';
 import 'package:petaniku2/design_asset_login/textfield_login_password.dart';
 import 'package:petaniku2/page/design_dashboard.dart';
+import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,7 +29,7 @@ Future<void> _login() async{
 
 
   final response = await http.post(
-  Uri.parse('http://192.168.69.71:8000/api/login'),
+  Uri.parse('http://192.168.18.11:8000/api/login'),
   body: {'username':username,'password':password}
 
   );

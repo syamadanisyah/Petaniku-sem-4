@@ -10,6 +10,16 @@ class design_profile extends StatefulWidget {
 class _design_profileState extends State<design_profile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+
+    body: Column(
+      children: [
+        Container(
+          child: CircleAvatar(),
+        )
+      ],
+    ),
+
+    );
   }
 }
