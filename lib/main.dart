@@ -26,6 +26,7 @@ import 'package:petaniku2/page/navbar.dart';
 import 'package:petaniku2/produk/test_asset_produk.dart';
 import 'package:petaniku2/search/search.dart';
 import 'package:petaniku2/firebase_options.dart';
+import 'package:petaniku2/transaction/statusBarang.dart';
 
 void main() async{
 WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
 initialRoute: '/',
 routes: {
   // '/':(context) => design_unit_kategori(kategori: modelKategori(id: 1, namaKategori: ''))
-    '/':(context) => design_dashboard()
+    '/':(context) => navbar_bottom()
 },
 
 
