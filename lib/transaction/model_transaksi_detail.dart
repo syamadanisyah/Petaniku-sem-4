@@ -20,8 +20,8 @@ return modelTransaksi_detail(
 id_td: json['id_td'] ??'',
 id_produk: json['id_produk'] ??'',
 nama_produk: json['nama_produk'] ??'',
-harga: json['harga'] ??'',
-jumlah: json['jumlah'] ??'',
+harga: json['harga_produk'] ??'',
+jumlah: json['jumlah_produk'] ??'',
 
 );
 }

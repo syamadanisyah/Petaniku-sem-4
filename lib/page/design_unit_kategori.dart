@@ -7,6 +7,7 @@ import 'package:petaniku2/Barang/gridview_barang.dart';
 import 'package:petaniku2/Kategori/listview_kategori.dart';
 import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/Kategori/search_kategori.dart';
+import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:http/http.dart' as http;
 import 'package:d_method/d_method.dart';
@@ -102,8 +103,7 @@ class _design_unit_kategoriState extends State<design_unit_kategori> {
     try {
       DMethod.log('load data');
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.18.11:8000/api/kategorifil?id_kategori=${widget.kategori.id}'),
+        PetaniKuConstant.baseUrl("kategorifil?id_kategori=${widget.kategori.id}"),
       );
 
       DMethod.log('after load data');
@@ -133,7 +133,7 @@ class _design_unit_kategoriState extends State<design_unit_kategori> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('test aja bang'),
+        // title: Text('test aja bang'),
       ),
       body: FutureBuilder(
         future: Future.value(listKategori),

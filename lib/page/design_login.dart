@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petaniku2/User/modelUser.dart';
+import 'package:petaniku2/User/session_user.dart';
 import 'package:petaniku2/design_asset_login/button_login.dart';
 import 'package:petaniku2/design_asset_login/textButton_lupa_psw.dart';
 import 'package:petaniku2/design_asset_login/textButton_regis.dart';
 import 'package:petaniku2/design_asset_login/textfield_login.dart';
 import 'package:petaniku2/design_asset_login/textfield_login_password.dart';
 import 'package:petaniku2/page/design_dashboard.dart';
+import 'package:petaniku2/page/navbar.dart';
 import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +32,7 @@ Future<void> _login() async{
 
 
   final response = await http.post(
-  Uri.parse('http://192.168.18.11:8000/api/login'),
+  PetaniKuConstant.baseUrl("login"),
   body: {'username':username,'password':password}
 
   );
@@ -38,7 +41,9 @@ Future<void> _login() async{
   if(response.statusCode==200){
     //login berhasil
     final responeData = jsonDecode(response.body);
-    Navigator.push(context, MaterialPageRoute(builder:(context) => design_dashboard(), ));
+    modelUser user = modelUser.fromJson(responeData['data']);
+    await PetanikuService.login(user);
+    Navigator.push(context, MaterialPageRoute(builder:(context) => navbar_bottom(), ));
   }else{
     //login gagal 
     final errorMessage = jsonDecode(response.body)['message'];
@@ -71,7 +76,7 @@ Future<void> _login() async{
                   padding: const EdgeInsets.only(left:20),
                   child: Text(
                     "Anda berada di aplikasi PETANIKU",
-                    style: TextStyle(fontSize: 10),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
                 SizedBox(
@@ -116,6 +121,9 @@ Future<void> _login() async{
                 SizedBox(
                   height: 35,
                 ),
+
+                /**
+                 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -163,9 +171,11 @@ Future<void> _login() async{
                      ],
                    ),
                  ),
+                 */
               ],
             ),
           ),
-        ));
+        )
+        );
   }
 }

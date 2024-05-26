@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/page/design_produk.dart';
 import 'package:petaniku2/produk/modelProduk.dart';
@@ -36,9 +37,10 @@ class dinamis_horizontal extends StatefulWidget {
 class _dinamis_horizontalState extends State<dinamis_horizontal> {
   String jsonProduk = "{}";
 
-  List<produk> listProduk = [];
+  List<modelProduk> listProduk = [];
 
   Future<void> showProduk() async {
+    print('show produk');
      
      try {
        
@@ -49,11 +51,11 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
            
            setState(() {
              listProduk = jsonData.map((data) =>
-              produk.fromJson(data)).toList();
+              modelProduk.fromJson(data)).toList();
            });
      // print("Contoh data = " + listProduk[0]['nama_produk']);
     }else{
-      throw Exception('failed to load data');
+      throw Exception('failed to load data : ${response.statusCode}');
     }
 
 
@@ -93,13 +95,12 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
       itemCount: listProduk.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final produk prd = listProduk[index]; 
-        return GestureDetector(
+        final modelProduk prd = listProduk[index]; 
+        return InkWell(
          onTap: () {
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => 
-            design_produk(dataProduk:prd,)
-            ));
+           Get.to(
+             design_produk(dataProduk:prd,)
+           );
           },
           
           child: Container(
@@ -131,17 +132,21 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                  //  child: prd.nama_produk.isEmpty
-                  //       ? Text("Loading..")
-                  //       : Text(
-                  //           // prd.nama_produk,
-                  //           ''
-                  //           style: stylefont().body_gridview,
-                  //         ),
+                   child: prd.nama.toString().isEmpty
+                        ? Text("Loading..")
+                        : Text(
+                            prd.nama.toString(),
+                            
+                            style: stylefont().body_gridview,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                   ),//font mu kegeden oke wait
                   SizedBox(// seyk dilut
                     height: 10,
                   ),
+                   
+
                   Container(
                     alignment: Alignment.centerLeft,
                     child: prd.harga ==0? Text(
@@ -153,24 +158,24 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                     ),
                   ),
                   SizedBox(
-                    height:30,
+                    height:20,
                   ),
                   //dah brrti data mu kosong dan gaenek seng di load
                   Container(
                     alignment: Alignment.centerLeft,
-                   child:  Text("Loading...",
-                      style: stylefont().diskripsi_gridview_barang,
+                   child: prd.deskripsi.toString().isEmpty
+                   ?Text("Loading...",
+                     style: stylefont().diskripsi_gridview_barang,
                       //btw dm kuning wes iso di tuker:v anjay aku ngincer skin bened :v
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                    )
-                    // :Text(
-                    // //  prd.deskripsi,
-                    // 'dees',
-                    //   style: stylefont().diskripsi_gridview_barang,
-                    //    maxLines: 2,
-                    //   overflow: TextOverflow.ellipsis,
-                    // ),
+                      )
+                    :Text(
+                     prd.deskripsi.toString(),
+                      style: stylefont().diskripsi_gridview_barang,
+                       maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

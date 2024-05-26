@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:d_method/d_method.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:petaniku2/Barang/gridview_barang.dart';
 import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/produk/scroll_horizontal_produk.dart';
+import 'package:petaniku2/transaction/cart_controller.dart';
+import 'package:petaniku2/transaction/design_keranjang1.dart';
 import 'package:petaniku2/transaction/design_keranjang_transaction.dart';
 import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/navbar_produk_scroll_hide.dart';
@@ -117,7 +121,7 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
                       ],
                     ),
                     SizedBox(
-                      width: 170,
+                      width: 100,
                     ),
                   ],
                 ),
@@ -166,7 +170,31 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                   DMethod.log('id produk : ${widget.produk.id}');
+                  DMethod.log('nama produk : ${widget.produk.nama}');
+                  // int qty = await showQtyDialog(context, 1) ?? 1;
+
+                  // if (qty <= 0) {
+                  //   qty = 1;
+                  // }
+
+                  // DMethod.log('qty : $qty');
+
+                  final controller = CartController();
+
+                  await controller.addCart(
+                    1,
+                    widget.produk.id,
+                    widget.produk.nama,
+                    1,
+                    widget.produk.harga.toString(),
+                  );
+
+                  Get.to(design_keranjang());
+               
+
+                },
                 child: Icon(
                   Icons.shopping_cart,
                   size: 35,
@@ -180,10 +208,22 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                   MaterialPageRoute(builder: (context) => keranjang_transactionState(),
-                   ));
+                onTap: () async {
+                 
+                List<modelProduk> models =[widget.produk];
+                int totalPrice = 0;
+                for(var prod in models){
+                  totalPrice += prod.harga;
+                }
+                //lanjutan ini untuk besok
+                Get.to(
+                  keranjang_transactionState(
+                    produk: models,
+                     harga: totalPrice
+                     ),
+                     transition:Transition.rightToLeft,
+                  );
+                
                 },
                 child: Container(
                   height: 47,
@@ -202,4 +242,68 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
       ),
     );
   }
+
+   Future<int?> showQtyDialog(BuildContext context, int oldValue) async {
+    TextEditingController textController =
+        TextEditingController(text: '$oldValue');
+    int? enteredQty;
+
+    // Tampilkan dialog
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Jumlah Produk"),
+          content: TextField(
+            controller: textController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration:
+                const InputDecoration(hintText: "Masukkan Jumlah Produk"),
+            maxLines: 1,
+          ),
+          actions: <Widget>[
+            // Tombol Batal
+            TextButton(
+              onPressed: () {
+                enteredQty = -1;
+                Navigator.of(context)
+                    .pop(null); // Tutup dialog tanpa mengembalikan data
+              },
+              child: const Text("Batal"),
+            ),
+            // Tombol Simpan
+            ElevatedButton(
+              onPressed: () {
+                // cek apakah jumlah kosong
+                if (textController.text.trim().isEmpty) {
+                  Get.snackbar('Error', 'Jumlah tidak boleh kosong');
+                  return;
+                }
+                // get jumlah
+                int val = int.parse(textController.text);
+                // cek validasi jumlah
+                if (val <= 0) {
+                  Get.snackbar('Error', 'Jumlah minimal 1');
+                  return;
+                } else if (val > 99) {
+                  Get.snackbar('Error', 'Jumlah maksimal 99');
+                  return;
+                }
+
+                // update jumlah
+                enteredQty = val;
+                Get.back();
+              },
+              child: const Text("Simpan"),
+            ),
+          ],
+        );
+      },
+    );
+
+    return enteredQty;
+  }
 }
+

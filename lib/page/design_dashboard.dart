@@ -15,7 +15,6 @@ class design_dashboard extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -41,7 +40,7 @@ class design_dashboard extends StatelessWidget {
               SizedBox(height: 10,),
               button_halaman_hasil_panen(),
               SizedBox(height: 10,),
-              button_halaman_bantuan_dashboard(),
+              // button_halaman_bantuan_dashboard(),
               SizedBox(height:20 ,),
                Container(
                 margin: EdgeInsets.only(left: 30),
@@ -52,8 +51,8 @@ class design_dashboard extends StatelessWidget {
                   ),
               ),
               SizedBox(height: 20,),
-              Container(
 
+              Container(
                 width: 350,
                 height: 180,
                 decoration: BoxDecoration(
@@ -61,7 +60,7 @@ class design_dashboard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: Colors.transparent
-                  )
+                  ),
                 ),
               ),
               SizedBox(height: 20,),

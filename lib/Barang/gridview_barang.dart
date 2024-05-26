@@ -71,9 +71,12 @@ class _gridview_barangState extends State<gridview_barang> {
               return GestureDetector(
                 onTap: () {
                   // gridview_barang.Id_produk = ListProduk[0]['id_produk'];
-                Navigator.push(context, MaterialPageRoute(builder: (context) => design_produk_detail_kategori(produk: widget.listKategori[index],)
-                ));
-           
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => design_produk_detail_kategori(
+                                produk: widget.listKategori[index],
+                              )));
                 },
                 child: itemGrid(
                   produk: modelProduk,

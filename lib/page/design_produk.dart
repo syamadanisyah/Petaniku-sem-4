@@ -1,19 +1,25 @@
+import 'package:d_method/d_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/produk/box_diskripsi.dart';
 import 'package:petaniku2/produk/design_button_fav.dart';
 import 'package:petaniku2/produk/gambar_produk.dart';
 import 'package:petaniku2/produk/modelProduk.dart';
 import 'package:petaniku2/produk/scroll_horizontal_produk.dart';
+import 'package:petaniku2/transaction/cart_controller.dart';
+import 'package:petaniku2/transaction/design_keranjang1.dart';
+import 'package:petaniku2/transaction/design_keranjang_transaction.dart';
 import 'package:petaniku2/warna/navbar_produk_scroll_hide.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
 
 
 class design_produk extends StatelessWidget {
-  final produk dataProduk;
+  final modelProduk dataProduk;
   
   const design_produk({Key? key,
   required this.dataProduk
@@ -28,7 +34,7 @@ class design_produk extends StatelessWidget {
 
 class produk_dinamis extends StatefulWidget {
 
-final produk dataProduk;
+final modelProduk dataProduk;
 
   const produk_dinamis({
     Key? key ,
@@ -41,7 +47,7 @@ final produk dataProduk;
 
 class _produk_dinamisState extends State<produk_dinamis> {
 
-final produk dataProduk;
+final modelProduk dataProduk;
 
 _produk_dinamisState({
   required this.dataProduk
@@ -86,41 +92,47 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
                 child: gambar_produk()
                ),*/
                SizedBox(height: 10,),
+               
               Container(
+                alignment: Alignment.centerLeft,
                 color: warna.hijau,
                 height: 80,
-                child: Row(
-                  children: [
-                    Column(
+                
+                
+               
+                  child:   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 7,),
+                        // SizedBox(height: 7,),
                         Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Text(''
-                          ,style: stylefont().body,)
+                          // width: 400,
+                          margin: EdgeInsets.only(left: 5),
+                          child: Text(dataProduk.nama
+                          ,style: stylefont().body,
+                          )
                           ),
                         Container(
-                          margin: EdgeInsets.only(left: 10),
+                          // width: 400,
+                          margin: EdgeInsets.only(left: 5),
                           child: Text('Rp ${dataProduk.harga}',
                           style: stylefont().body,),
                         ),
                       ],
                     ),
-                    SizedBox(width: 170,),
+                    // SizedBox(width: 170,),
                    /* Container(
 
                       child: button_wishlist(),
                     ),*/
-                  ],
-                ),
+                  
               ),
         
               Container(
                 margin: EdgeInsets.only(bottom: 30),
+                alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('',
+                  child: Text(dataProduk.deskripsi.toString(),
                   textAlign:TextAlign.justify,
                   maxLines: null,
                   overflow: TextOverflow.visible,
@@ -165,9 +177,29 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(onPressed: () {
+            ElevatedButton(onPressed: () async {
+              DMethod.log('id produk : ${widget.dataProduk.id}');
+              DMethod.log('nama produk : ${widget.dataProduk.nama}');
               
-            }, child: Icon(Icons.shopping_cart,size: 35,color: Colors.amber[600],),
+              int qty = await showQtyDialog(context,1) ?? 1;
+
+              if(qty <= 0){
+                qty = 1;
+              }
+
+              DMethod.log('qty : $qty');
+              final controller = CartController();
+               //dari sini kemarin
+              await controller.addCart(
+                1, widget.dataProduk.id
+                , widget.dataProduk.nama!, 
+                qty,
+                widget.dataProduk.harga.toString()
+                );
+              Get.to(design_keranjang()
+              );
+            },
+             child: Icon(Icons.shopping_cart,size: 35,color: Colors.amber[600],),
             style: ButtonStyle(
              minimumSize: MaterialStateProperty.all(Size(180, 35)),
              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -178,12 +210,17 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
             ),
             
             ),
-           
      
             
            GestureDetector(
-              onTap: () {
-                
+              onTap: () async {
+                List<modelProduk> models = [widget.dataProduk];
+                int totalPrice = 0;
+                for(var prod in models) {
+                  totalPrice += prod.harga!;
+                }
+                Get.to(keranjang_transactionState(produk: models, harga: totalPrice)
+               ,transition: Transition.rightToLeft );
               },
              child: Container(
               height: 47,
@@ -200,5 +237,68 @@ final mediaqueryheigh = MediaQuery.of(context).size.height;
     ),
 
     );
+  }
+  
+  Future<int?> showQtyDialog(BuildContext context, int oldValue) async {
+    TextEditingController textController =
+        TextEditingController(text: '$oldValue');
+    int? enteredQty;
+
+    // Tampilkan dialog
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Jumlah Produk"),
+          content: TextField(
+            controller: textController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration:
+                const InputDecoration(hintText: "Masukkan Jumlah Produk"),
+            maxLines: 1,
+          ),
+          actions: <Widget>[
+            // Tombol Batal
+            TextButton(
+              onPressed: () {
+                enteredQty = -1;
+                Navigator.of(context)
+                    .pop(null); // Tutup dialog tanpa mengembalikan data
+              },
+              child: const Text("Batal"),
+            ),
+            // Tombol Simpan
+            ElevatedButton(
+              onPressed: () {
+                // cek apakah jumlah kosong
+                if (textController.text.trim().isEmpty) {
+                  Get.snackbar('Error', 'Jumlah tidak boleh kosong');
+                  return;
+                }
+                // get jumlah
+                int val = int.parse(textController.text);
+                // cek validasi jumlah
+                if (val <= 0) {
+                  Get.snackbar('Error', 'Jumlah minimal 1');
+                  return;
+                } else if (val > 99) {
+                  Get.snackbar('Error', 'Jumlah maksimal 99');
+                  return;
+                }
+
+                // update jumlah
+                enteredQty = val;
+                Get.back();
+              },
+              child: const Text("Simpan"),
+            ),
+          ],
+        );
+      },
+    );
+
+    return enteredQty;
   }
 }

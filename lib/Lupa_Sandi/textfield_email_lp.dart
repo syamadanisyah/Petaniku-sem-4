@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petaniku2/page/Lupa_password/design_OTP.dart';
 import 'package:petaniku2/warna/warna.dart';
 
 class textfield_email_lp extends StatelessWidget {

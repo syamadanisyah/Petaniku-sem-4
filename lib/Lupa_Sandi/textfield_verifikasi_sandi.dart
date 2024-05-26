@@ -6,22 +6,24 @@ class textfield_verifikasi_sandi extends StatefulWidget {
   
 
   final String hint;
+   TextEditingController controller = TextEditingController();
 
-  textfield_verifikasi_sandi(this.hint);
+  textfield_verifikasi_sandi(this.hint, this.controller);
 
 
 
 
   @override
-  State<textfield_verifikasi_sandi> createState() => _textfield_verifikasi_sandiState(hint);
+  State<textfield_verifikasi_sandi> createState() => _textfield_verifikasi_sandiState(hint, controller);
 }
 
 
 class _textfield_verifikasi_sandiState extends State<textfield_verifikasi_sandi> {
 
 final String hint;
+TextEditingController controller = TextEditingController();
 
-_textfield_verifikasi_sandiState(this.hint);
+_textfield_verifikasi_sandiState(this.hint, this.controller);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,9 @@ bool obscureText = true;
         obscureText: obscureText,
         obscuringCharacter: '*',
         style: GoogleFonts.urbanist(),
+        onChanged: (value) {
+          widget.controller.text = value;
+        },
         decoration: InputDecoration(
           labelText: "Masukan verifikasi sandi baru",
           labelStyle: GoogleFonts.urbanist(

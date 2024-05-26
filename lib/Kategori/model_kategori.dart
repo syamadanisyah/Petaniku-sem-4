@@ -18,13 +18,12 @@ class modelProduk {
       id: json['id_produk'] ?? 0,
       nama: json['nama_produk'] ?? '',
       harga: json['harga'] ?? 0,
-      deskripsi: json['diskripsi'] ?? '',
-      // kategori: json['kategori'] != null
-      //     ? modelKategori.fromJson(
-      //         json['kategori'] as Map<String, dynamic>,
-      //       )
-      //     : modelKategori(id: 0, namaKategori: ''),
+      deskripsi: json['deskripsi'] ?? '',
     );
+  }
+
+  static List<modelProduk> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => modelProduk.fromJson(json)).toList();
   }
 }
 
@@ -44,7 +43,7 @@ class modelKategori {
     );
   }
 
-  static List<modelKategori> fromList(List<dynamic> json){
+  static List<modelKategori> fromList(List<dynamic> json) {
     return json.map((e) => modelKategori.fromJson(e)).toList();
   }
 }

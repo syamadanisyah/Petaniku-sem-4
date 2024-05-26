@@ -41,15 +41,17 @@ final MediaQueryWidth = MediaQuery.of(context).size.width;
             child: Text("text $e",style: TextStyle(fontSize: 40),),
           ),
         );
-      }).toList(), options: CarouselOptions(
+      }).toList(),
+       options: CarouselOptions(
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 3),
         height: 300,
         onPageChanged: (index, reason) {
           
         },
-        )
-        )
+        ),
+        ),
+        
     );
   }
 }

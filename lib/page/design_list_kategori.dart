@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petaniku2/Kategori/listview_kategori.dart';
 import 'package:petaniku2/Kategori/search_kategori.dart';
 
@@ -30,8 +32,17 @@ class _design_list_kategoriState extends State<design_list_kategori> {
               //color: Colors.amber,
               width: 390,
               height: 60,
-         //    child: search_kategori(),
+              margin: EdgeInsets.only(left: 10),
+              child: Text("Pilihan semua Kategori",
+              style: GoogleFonts.urbanist(
+                textStyle:TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold
+                )
+              ),
+              ), //    child: search_kategori(),
             ),
+
             Container(
               height: 200,
               width: 395,
