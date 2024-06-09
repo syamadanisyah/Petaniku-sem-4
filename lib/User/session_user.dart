@@ -71,9 +71,9 @@ class PetanikuService {
   static Future<int> getUserDataInt(String data) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(data)) {
-      return prefs.getInt(data) ?? 0;
+      return prefs.getInt(data) ?? 1;
     } else {
-      return 0;
+      return 1;
     }
   }
 

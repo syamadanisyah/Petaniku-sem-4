@@ -22,7 +22,7 @@ class button_barang_dashboard extends StatelessWidget {
         fixedSize: Size(200, 20),
       ),
        child: Padding(
-         padding: const EdgeInsets.all(10),
+         padding: const EdgeInsets.all(5),
          child: Text("Produk Tani",
          style: GoogleFonts.urbanist(
           textStyle: TextStyle(fontSize: 19,fontWeight: FontWeight.w700,

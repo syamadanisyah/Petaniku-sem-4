@@ -32,13 +32,22 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
     }
   }
 
+//   void loadData() async{
+
+// kategori = await fetchTopCategories();
+// setState(() {});
+
+//   }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       kategori = await fetchTopCategories();
       setState(() {});
-    });
+      
+      
+      });
   }
 
   @override
@@ -48,6 +57,8 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
         children: [
           Row(
             children: [
+
+              if(kategori.length >0)
               ElevatedButton(
                 onPressed: () {
                   Get.to(design_unit_kategoriPopuler(
@@ -80,9 +91,13 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
                     minimumSize: Size(70, 70)
                     ),
               ),
+
+
+
               SizedBox(
                 width: 25,
               ),
+               if(kategori.length >1)
               ElevatedButton(
                 onPressed: () {
                        Get.to(design_unit_kategoriPopuler(
@@ -120,8 +135,12 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
           SizedBox(
             height: 20,
           ),
+
+
           Row(
             children: [
+
+               if(kategori.length >2)
               ElevatedButton(
                 onPressed: () {
                        Get.to(design_unit_kategoriPopuler(
@@ -156,6 +175,8 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
               SizedBox(
                 width: 25,
               ),
+
+                if(kategori.length >3)
               ElevatedButton(
                 onPressed: () {
                        Get.to(design_unit_kategoriPopuler(
@@ -187,6 +208,7 @@ class _gridview_tombol_barangState extends State<gridview_tombol_barang> {
                     elevation: 7,
                     minimumSize: Size(70, 70)),
               ),
+
             ],
           ),
         ],

@@ -191,7 +191,8 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
                     widget.produk.harga.toString(),
                   );
 
-                  Get.to(design_keranjang());
+                  Get.to(design_keranjang()
+                  );
                
 
                 },
@@ -223,7 +224,7 @@ class _produk_dinamisState extends State<produk_detail_kategori_dinamis> {
                      ),
                      transition:Transition.rightToLeft,
                   );
-                
+                    
                 },
                 child: Container(
                   height: 47,

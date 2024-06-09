@@ -7,14 +7,16 @@ class PetaniKuConstant{
 
 
 static Uri baseUrl(url){
-  Uri server = Uri.parse('http://192.168.31.71:8000/api/'+url);
+  Uri server = Uri.parse('https://petaniku.tifnganjuk.com/api/mobileapi/'+url);
+  // Uri server = Uri.parse('https://petaniku.tifnganjuk.com/api/mobileapi/'+url);
   
   return server;
 } 
 
-static showLoading({
+static showLoading({ 
   bool canPop = false,
   Color loadingColor = Colors.green,
+
 }) {
   Get.dialog(
     PopScope(

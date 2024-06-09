@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:petaniku2/warna/constant.dart';
 import 'package:http/http.dart' as http;
@@ -11,10 +13,12 @@ class CartModel {
   final int idUser;
   final String namaProduk;
   final int hargaProduk;
+  final String? gambar;
   int jumlahProduk;
   final int idProduk;
   int totalHarga;
   bool checked;
+  TextEditingController? controller;
 
   CartModel({
     required this.idKeranjang,
@@ -23,8 +27,10 @@ class CartModel {
     required this.namaProduk,
     required this.jumlahProduk,
     required this.idProduk,
+    this.gambar,
     this.totalHarga = 0,
     this.checked = false,
+    this.controller,
   });
 
   factory CartModel.fromMap(Map<String, dynamic> map) {
@@ -35,6 +41,7 @@ class CartModel {
       namaProduk: map['nama_produk'] as String,
       jumlahProduk: map['jumlah_produk'] as int,
       idProduk: map['id_produk'] as int,
+      gambar: map['gambar']
     );
   }
 

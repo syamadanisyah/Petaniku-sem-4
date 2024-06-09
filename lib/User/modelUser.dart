@@ -24,7 +24,7 @@ class modelUser {
       id_user: '${json['id_user']}',
       nama: json['nama'],
       username: json['username'],
-      password: json['password'],
+      password: json['password'] ?? '',
       email: json['email'],
       alamat: json['alamat'],
       gambar: json['gambar'],

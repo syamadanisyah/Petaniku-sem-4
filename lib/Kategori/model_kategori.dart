@@ -3,6 +3,8 @@ class modelProduk {
   final String nama;
   final int harga;
   final String deskripsi;
+  final int? jumlahProduk;
+  final String? gambar;
   // final modelKategori kategori;
 
   const modelProduk({
@@ -10,6 +12,8 @@ class modelProduk {
     required this.nama,
     required this.harga,
     required this.deskripsi,
+    this.jumlahProduk,
+    this.gambar
     // required this.kategori,
   });
 
@@ -19,6 +23,7 @@ class modelProduk {
       nama: json['nama_produk'] ?? '',
       harga: json['harga'] ?? 0,
       deskripsi: json['deskripsi'] ?? '',
+      gambar: json['gambar'] ?? '',
     );
   }
 

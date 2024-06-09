@@ -54,11 +54,11 @@ class stf_barang extends StatelessWidget {
                 height: 50,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
            
                   Container(
-                    margin: EdgeInsets.only(left: 90),
+                    margin: EdgeInsets.only(right: 150),
                     child: Text(
                       "Produk tani",
                       style: stylefont().Header,
@@ -67,7 +67,7 @@ class stf_barang extends StatelessWidget {
                   
                   Container(
                     alignment: Alignment.topRight,
-                    margin: EdgeInsets.only(right: 20),
+                    margin: EdgeInsets.only(right: 10),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: warna.hijau,
@@ -75,20 +75,24 @@ class stf_barang extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8))),
                         onPressed: () {
-                          // Get.to(
-                          //   keranjang_transactionState(produk: produk, harga: 222)
-                          // )
+
+                          //
+
+                          Get.to(
+                            keranjang_transactionState(produk: [], harga: 222)
+                          );
                         },
                         child: Icon(Icons.shopping_cart_rounded,
                             color: Colors.white)),
                   ),
                 ],
               ),
-              Container(
-                  //di container harus ada ukuran nya.di kelas ataupun saat pemanggilan harus di bungkus container
-                  height: mediaqueryheigh * 0.2,
-                  width: mediaquerywidth,
-                  child: slider_barang()),
+              // Container(
+              //     //di container harus ada ukuran nya.di kelas ataupun saat pemanggilan harus di bungkus container
+              //     height: mediaqueryheigh * 0.2,
+              //     width: mediaquerywidth,
+              //     child: slider_barang()
+              //     ),
               SizedBox(
                 height: 50,
               ),

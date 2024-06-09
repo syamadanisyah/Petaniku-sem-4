@@ -158,28 +158,26 @@ required this.dataPopulerDet
                 onPressed: () async {
                   
                    
-                   
                    DMethod.log('id produk : ${widget.modelPopuler.id}');
                   DMethod.log('nama produk : ${widget.modelPopuler.nama}');
-                  // int qty = await showQtyDialog(context, 1) ?? 1;
 
-                  // if (qty <= 0) {
-                  //   qty = 1;
-                  // }
+                  int qty = await showQtyDialog(context, 1) ?? 1;
 
-                  // DMethod.log('qty : $qty');
+                  if(qty <= 0 ){
+                    qty = 1;
+                  }
 
-                  final controller = CartController();
-
-                  await controller.addCart(
-                    1,
-                    widget.modelPopuler.id,
-                    widget.modelPopuler.nama,
-                    1,
-                    widget.modelPopuler.harga.toString(),
-                  );
-
-                  Get.to(design_keranjang());
+                   DMethod.log('qty : $qty');
+              final controller = CartController();
+               //dari sini kemarin
+              await controller.addCart(
+                1, widget.modelPopuler.id
+                , widget.modelPopuler.nama!, 
+                qty,
+                widget.modelPopuler.harga.toString()
+                );
+              Get.to(design_keranjang()
+              );
                
 
                 },
@@ -203,19 +201,16 @@ required this.dataPopulerDet
                  
                   
                   
-                List<modelProduk> models =[widget.modelPopuler];
+               DMethod.log('id produk : ${widget.modelPopuler.id}');
+                  DMethod.log('nama produk : ${widget.modelPopuler.nama}');
+                 
+                    List<modelProduk> models = [widget.modelPopuler];
                 int totalPrice = 0;
-                for(var prod in models){
-                  totalPrice += prod.harga;
+                for(var prod in models) {
+                  totalPrice += prod.harga!;
                 }
-                //lanjutan ini untuk besok
-                Get.to(
-                  keranjang_transactionState(
-                    produk: models,
-                     harga: totalPrice
-                     ),
-                     transition:Transition.rightToLeft,
-                  );
+                Get.to(keranjang_transactionState(produk: models, harga: totalPrice)
+               ,transition: Transition.rightToLeft );
                 
                 },
                 child: Container(
@@ -233,7 +228,68 @@ required this.dataPopulerDet
           ),
         ),
       ),
-
     );
   }
+   Future<int?> showQtyDialog(BuildContext context, int oldValue) async {
+    TextEditingController textController =
+        TextEditingController(text: '$oldValue');
+    int? enteredQty;
+
+    // Tampilkan dialog
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Jumlah Produk"),
+          content: TextField(
+            controller: textController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration:
+                const InputDecoration(hintText: "Masukkan Jumlah Produk"),
+            maxLines: 1,
+          ),
+          actions: <Widget>[
+            // Tombol Batal
+            TextButton(
+              onPressed: () {
+                enteredQty = -1;
+                Navigator.of(context)
+                    .pop(null); // Tutup dialog tanpa mengembalikan data
+              },
+              child: const Text("Batal"),
+            ),
+            // Tombol Simpan
+            ElevatedButton(
+              onPressed: () {
+                // cek apakah jumlah kosong
+                if (textController.text.trim().isEmpty) {
+                  Get.snackbar('Error', 'Jumlah tidak boleh kosong');
+                  return;
+                }
+                // get jumlah
+                int val = int.parse(textController.text);
+                // cek validasi jumlah
+                if (val <= 0) {
+                  Get.snackbar('Error', 'Jumlah minimal 1');
+                  return;
+                } else if (val > 99) {
+                  Get.snackbar('Error', 'Jumlah maksimal 99');
+                  return;
+                }
+
+                // update jumlah
+                enteredQty = val;
+                Get.back();
+              },
+              child: const Text("Simpan"),
+            ),
+          ],
+        );
+      },
+    );
+
+    return enteredQty;
+}
 }

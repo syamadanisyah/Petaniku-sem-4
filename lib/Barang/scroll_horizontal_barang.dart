@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petaniku2/Kategori/model_kategori.dart';
 import 'package:petaniku2/page/design_produk.dart';
 import 'package:petaniku2/produk/modelProduk.dart';
+import 'package:petaniku2/transaction/design_keranjang1.dart';
 import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/stylefont.dart';
 import 'package:petaniku2/warna/warna.dart';
@@ -99,7 +101,7 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
         return InkWell(
          onTap: () {
            Get.to(
-             design_produk(dataProduk:prd,)
+            design_produk(dataProduk: prd)
            );
           },
           
@@ -121,11 +123,20 @@ class _dinamis_horizontalState extends State<dinamis_horizontal> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: warna.abu_abu_hitam),
-                    alignment: Alignment.center,
-                    child: Text(""
-                     //diem o
-                     //fun mu rung mok panggil blok
-                    ),
+                    child: CachedNetworkImage(
+                        imageUrl: prd.gambar ?? '',
+                        placeholder: (context, url) {
+                          return Center(
+                            child: Text('gambar tidak tersedia'),
+                          );
+                        },
+                        errorWidget: (context, url, error) {
+                          return Center(
+                            child: Text('gambar tidak tersedia'),
+                          );
+                        },
+                        fit: BoxFit.cover,
+                      )
                   ),
                   SizedBox(
                     height: 50,

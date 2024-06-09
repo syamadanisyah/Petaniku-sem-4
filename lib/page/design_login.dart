@@ -43,7 +43,7 @@ Future<void> _login() async{
     final responeData = jsonDecode(response.body);
     modelUser user = modelUser.fromJson(responeData['data']);
     await PetanikuService.login(user);
-    Navigator.push(context, MaterialPageRoute(builder:(context) => navbar_bottom(), ));
+    Navigator.push(context, MaterialPageRoute(builder:(context) => design_dashboard(), ));
   }else{
     //login gagal 
     final errorMessage = jsonDecode(response.body)['message'];

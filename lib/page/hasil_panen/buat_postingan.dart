@@ -1,14 +1,25 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:d_method/d_method.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:petaniku2/User/session_user.dart';
+import 'package:petaniku2/page/hasil_panen/halaman_postingan.dart';
 import 'package:petaniku2/page/hasil_panen/modelHasilPanen.dart';
 import 'package:petaniku2/warna/constant.dart';
 import 'package:petaniku2/warna/warna.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
+
+import 'pilih gambar.dart';
 
 class buat_postingan extends StatefulWidget {
   const buat_postingan({super.key});
@@ -18,22 +29,103 @@ class buat_postingan extends StatefulWidget {
 }
 
 class _buat_postinganState extends State<buat_postingan> {
+  static Future<ChoosePhotoEntity?>? pickPhoto(ImageSource imageSource) async {
+    // request permission
+    Map<Permission, PermissionStatus> status = await [
+      Permission.storage,
+      Permission.camera,
+    ].request();
 
-  
-  Future<void> addPost(modelHasilPanen post) async {
-    final response = await http.post(
-      PetaniKuConstant.baseUrl('addpost'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(post.toJson()),
+    // cek permission
+    if (status[Permission.storage]!.isGranted ||
+        status[Permission.camera]!.isGranted) {
+      // choose photo
+      final returnImage = await ImagePicker().pickImage(
+        source: imageSource,
+      );
+
+      // get photo
+      DMethod.log('from photo');
+      if (returnImage != null) {
+        return ChoosePhotoEntity(
+          image: File(returnImage.path).readAsBytesSync(),
+          imageSelected: File(
+            returnImage.path,
+          ),
+        );
+      } else {
+        return null;
+      }
+    } else {
+      Get.showSnackbar(GetSnackBar(
+        title: 'Warning',
+        message: 'Permission dibutuhkan',
+      ));
+    }
+    return null;
+  }
+
+  // Future<void> addPostOld(modelHasilPanen post) async {
+  //   final response = await http.post(
+  //     PetaniKuConstant.baseUrl('addpost'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(post.toJson()),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  // Map<String, dynamic> responseData = jsonDecode(response.body);
+  // _showErrorDialog(context, 'berhasil membuat postingan');
+  // Get.off(halaman_postingan());
+  //   } else {
+  //     _showErrorDialog(context, 'Gagal membuat postingan');
+  //   }
+  // }
+
+  Future<void> addPost(modelHasilPanen postData, BuildContext context) async {
+    var uri = PetaniKuConstant.baseUrl('addpost');
+    var request = http.MultipartRequest('POST', uri);
+
+    // dynamic iduser =  await PetanikuService.getUserId();
+    // DMethod.log('id use ');
+
+    // Adding text fields
+    request.fields['id_user'] = '1';
+    request.fields['nama'] = postData.nama;
+    request.fields['tanaman'] = postData.tanaman;
+    request.fields['tanah'] = postData.luasTanah.toString();
+    request.fields['hasil'] = postData.deskripsiHasilPanen;
+
+    DMethod.log('path : ${photoEntity.imageSelected!.path}');
+
+    // Adding the image file
+    var mimeType = lookupMimeType(photoEntity.imageSelected!.path);
+    var fileType = mimeType!.split('/');
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'photo',
+        photoEntity.imageSelected!.path,
+        contentType: MediaType(fileType[0], fileType[1]),
+      ),
     );
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> responseData = jsonDecode(response.body);
-      _showErrorDialog(context, 'berhasil membuat pesanan');
-    } else {
-      _showErrorDialog(context, 'Gagal membuat pesanan');
+    // Sending the request
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseData = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseData);
+        _showErrorDialog(context, 'berhasil membuat postingan');
+        Get.off(halaman_postingan());
+      } else {
+        _showErrorDialog(
+            context, 'Upload failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      _showErrorDialog(context, 'Error uploading post: $e');
     }
   }
 
@@ -59,6 +151,9 @@ class _buat_postinganState extends State<buat_postingan> {
   TextEditingController luas_tanah = TextEditingController();
   TextEditingController deskripsi_hasil_panen = TextEditingController();
 
+  late ChoosePhotoEntity photoEntity =
+      ChoosePhotoEntity(image: null, imageSelected: null);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +167,12 @@ class _buat_postinganState extends State<buat_postingan> {
             margin: EdgeInsets.only(left: 70),
             height: 150,
             width: 250,
-            child: Center(
-              child: Text("Gambar"),
-            ),
+            child: photoEntity.imageSelected != null
+                ? Image.file(
+                    photoEntity.imageSelected!,
+                    fit: BoxFit.cover,
+                  )
+                : Center(child: Text('Silahkan pilih gambar')),
             decoration: BoxDecoration(
                 color: warna.abu_abu_hitam,
                 borderRadius: BorderRadius.circular(8)),
@@ -88,7 +186,11 @@ class _buat_postinganState extends State<buat_postingan> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       backgroundColor: Colors.red[800]),
-                  onPressed: () {},
+                  onPressed: () {
+                    photoEntity =
+                        ChoosePhotoEntity(image: null, imageSelected: null);
+                    setState(() {});
+                  },
                   child: Icon(
                     Icons.image_not_supported_sharp,
                     color: Colors.black,
@@ -104,7 +206,11 @@ class _buat_postinganState extends State<buat_postingan> {
                             borderRadius: BorderRadius.circular(8)),
                         minimumSize: Size(60, 35),
                         backgroundColor: warna.hijau),
-                    onPressed: () {},
+                    onPressed: () async {
+                      photoEntity = await pickPhoto(ImageSource.gallery)
+                          as ChoosePhotoEntity;
+                      setState(() {});
+                    },
                     child: Icon(
                       Icons.image_search,
                       color: Colors.white,
@@ -213,7 +319,7 @@ class _buat_postinganState extends State<buat_postingan> {
                             gambar: '',
                           );
 
-                          addPost(posting);
+                          addPost(posting, context);
                         },
                         child: Text(
                           "Posting",

@@ -2,9 +2,9 @@ import 'package:petaniku2/Kategori/model_kategori.dart';
 
 class produk {
 
-final int id_produk;
+final String id_produk;
 final String? nama_produk;
-final int? harga;
+final String? harga;
 final String? deskripsi;
 
 const produk({
